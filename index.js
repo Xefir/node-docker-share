@@ -38,12 +38,6 @@ class VirtualBox {
 
     if (opts.writable === false || opts.readonly) args.push('--readonly')
     if (opts.transient) args.push('--transient')
-
-    let that = this;
-    this.command(args, function () {
-      const args2 = ['setextradata', 'default', 'VBoxInternal2/SharedFoldersEnableSymlinksCreate/' + name, '1']
-      that.command(args2, done)
-    })
   }
 
   removeShare() {
@@ -164,6 +158,10 @@ class Shares {
         // TODO: compare properties
         if (state.share) next()
         else this.vm.addShare(name, hostPath, opts, next)
+      },
+
+      (next) => {
+        this.vm.command(['setextradata', 'default', 'VBoxInternal2/SharedFoldersEnableSymlinksCreate/' + name, '1'], next)
       },
 
       (next) => {
