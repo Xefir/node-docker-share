@@ -39,9 +39,10 @@ class VirtualBox {
     if (opts.writable === false || opts.readonly) args.push('--readonly')
     if (opts.transient) args.push('--transient')
 
+    let that = this;
     this.command(args, function () {
       const args2 = ['setextradata', 'default', 'VBoxInternal2/SharedFoldersEnableSymlinksCreate/' + name, '1']
-      this.command(args2, done)
+      that.command(args2, done)
     })
   }
 
