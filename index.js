@@ -38,6 +38,8 @@ class VirtualBox {
 
     if (opts.writable === false || opts.readonly) args.push('--readonly')
     if (opts.transient) args.push('--transient')
+
+    this.command(args, done)
   }
 
   removeShare() {
